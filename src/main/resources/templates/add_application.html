@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/header :: header"></head>
+
+<body>
+<!-- Include the header fragment -->
+<div th:insert="fragments/menu :: menu"></div>
+<main>
+  <div class="container" >
+    <form action="#" th:action="@{/application/new/{id}(id=${user.id})}" th:object="${application}"
+          method="post">
+
+
+      <div class="form-group">
+        <!--                <label for="id">Id</label>-->
+        <input type="hidden" id="id" class="form-control" th:field="*{id}">
+      </div>
+
+
+      <div class="form-group">
+        <label for="productionAmount">Production Amount</label>
+        <input type="number" id="productionAmount" class="form-control" th:field="*{productionAmount}">
+      </div>
+
+      <div class="form-group">
+        <label for="typeOfProduction">Type Of Production</label>
+        <input type="text" id="typeOfProduction" class="form-control" th:field="*{typeOfProduction}">
+      </div>
+
+      <div class="form-group">
+        <label for="categoryOfProduction">Category Of Production</label>
+        <input type="text" id="categoryOfProduction" class="form-control" th:field="*{categoryOfProduction}">
+      </div>
+
+      <div class="form-group">
+        <label for="productionLocation">Production Location</label>
+        <input type="text" id="productionLocation" class="form-control" th:field="*{productionLocation}">
+      </div>
+
+      <div class="form-group">
+        <label for="damagedProductionAmount">Damaged Production Amount</label>
+        <input type="number" id="damagedProductionAmount" class="form-control" th:field="*{damagedProductionAmount}">
+      </div>
+
+      <div class="form-group">
+        <label for="decision">Decision</label>
+        <input type="text" id="decision" class="form-control" th:field="*{decision}" readonly placeholder="Pending"/>
+      </div>
+
+
+      <div class="form-group">
+        <label for="longitude">Longitude</label>
+        <input type="number" id="longitude" class="form-control" th:field="*{longitude}">
+      </div>
+
+      <div class="form-group">
+        <label for="latitude">Latitude</label>
+        <input type="number" id="latitude" class="form-control" th:field="*{latitude}">
+      </div>
+
+      <div class="form-group">
+        <label for="compensationAmount">Compensation Amount</label>
+        <input type="number" id="compensationAmount" class="form-control" th:field="*{compensationAmount}" readonly th:value="0"/>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>
+
+<!-- Include the footer fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

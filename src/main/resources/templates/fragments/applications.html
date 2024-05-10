@@ -1,0 +1,154 @@
+<applications xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    </head>
+    <div th:if="${not #lists.isEmpty(applications)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Application Id</th>
+                <th>Production Amount</th>
+                <th>Type of Production</th>
+                <th>Category of Production</th>
+                <th>Production Location</th>
+                <th>Damaged Production Amount</th>
+                <th>Decision</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th>Compensation Amount</th>
+                <th>Action</th> <!-- Added a column header for actions -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${applications}">
+                <td th:text="${app.id}"></td>
+                <td th:text="${app.productionAmount}"></td>
+                <td th:text="${app.typeOfProduction}"></td>
+                <td th:text="${app.categoryOfProduction}"></td>
+                <td th:text="${app.productionLocation}"></td>
+                <td th:text="${app.damagedProductionAmount}"></td>
+                <td th:text="${app.decision}" readonly></td>
+                <td th:text="${app.longitude}"></td>
+                <td th:text="${app.latitude}"></td>
+                <td th:text="${app.compensationAmount}" readonly></td>
+                <td th:if="${app.id}">
+                    <button sec:authorize="hasRole('ROLE_INSPECTOR')" type="button" class="btn" th:id="${app.id}" name="determineCompensation" style="width: 150px; height: 40px; background-color: #4CAF50; color: white; font-size: 12px;">
+                        Determine Compensation
+                    </button>
+                    <button sec:authorize="hasRole('ROLE_INSPECTOR')" type="button" class="btn" th:id="${app.id}" name="makeDecision" style="width: 150px; height: 40px; background-color: #FFC107; color: black;">
+                        Make Decision
+                    </button>
+                    <button sec:authorize="hasRole('ROLE_FARMER')" type="button" class="btn" th:id="${app.id}" name="deleteApplication" style="width: 150px; height: 40px; background-color: #f44336; color: white;">
+                        <i class="remove user icon"></i>Delete
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(applications)}">
+        No Applications found! Create One From Users.
+    </div>
+
+    <script type="text/javascript">
+        $("[name='makeDecision']").click(function () {
+            var appId = $(this).attr('id');
+            var urlCall = "/application/makeDecision/";
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: urlCall + appId,
+                type: 'POST',
+                headers: {
+                    [csrfHeader]: csrfToken
+                },
+                success: function (result) {
+                    console.log(result);
+
+                    // Check the damagedAmount/productionAmount ratio
+                    var damagedProductionAmount = parseFloat($("[name='damagedProductionAmount']").val());
+                    var productionAmount = parseFloat($("[name='productionAmount']").val());
+                    var ratio = damagedProductionAmount / productionAmount;
+
+                    // Update the decision field based on the ratio
+                    if (ratio > 0.4) {
+                        $("[name='decision']").val("Approved");
+                    } else {
+                        $("[name='decision']").val("Denied");
+                    }
+
+                    // Add any specific logic after making a decision
+                    window.location.href = "/application";
+                },
+                error: function (result) {
+                    console.log(result);
+                },
+            });
+        });
+
+        $("[name='determineCompensation']").click(function () {
+            var appId = $(this).attr('id');
+            var urlCall = "/application/determineCompensation/";
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: urlCall + appId,
+                type: 'POST',
+                headers: {
+                    [csrfHeader]: csrfToken
+                },
+                success: function (result) {
+                    console.log(result);
+
+                    var damagedProductionAmount = parseFloat($("[name='damagedProductionAmount']").val());
+                    var decision = $("[name='decision']").val();
+                    var categoryOfProduction = $("[name='categoryOfProduction']").val();
+                    var compensationAmountField = $("[name='compensationAmount']");
+
+                    if (decision === "Approved") {
+                        if (categoryOfProduction === "Fruits") {
+                            compensationAmountField.val(10 * damagedProductionAmount);
+                        } else if (categoryOfProduction === "Vegetables") {
+                            compensationAmountField.val(20 * damagedProductionAmount);
+                        } else {
+                            compensationAmountField.val(0);
+                        }
+                    } else if (decision === "Denied") {
+                        compensationAmountField.val(0);
+                    }
+                },
+                error: function (result) {
+                    console.log(result);
+                },
+            });
+        });
+
+        $("[name='deleteApplication']").click(function () {
+            var urlCall = "/application/";
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: urlCall + $(this).attr('id'),
+                type: 'DELETE',
+                headers: {
+                    [csrfHeader]: csrfToken
+                },
+                success: function (result) {
+                    console.log(result);
+                    window.location.href = "/application";
+                },
+                error: function (result) {
+                    console.log(result);
+                },
+            });
+        });
+    </script>
+</applications>

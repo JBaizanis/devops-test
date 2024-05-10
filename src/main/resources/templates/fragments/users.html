@@ -1,0 +1,82 @@
+<users xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    </head>
+    <div th:if="${not #lists.isEmpty(users)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.phone}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.address}"></td>
+                <td th:if="${user.id}">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info" th:href="@{/user/{id}(id=${user.id})}">Edit</a> <!--Add sec authorize if you don't want to get 403!-->
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" type="button" class="btn btn-danger" th:id="${user.id}" name="deleteUser">
+                        <i class="remove user icon"></i> Delete
+                    </button>
+                    <a sec:authorize="hasRole('ROLE_FARMER')" class="btn btn-primary" th:href="@{/application/new/{id}(id=${user.id})}">Create new Application</a>
+                    <a sec:authorize="hasRole('ROLE_FARMER')" class="btn btn-primary" th:href="@{/application/user/{id}(id=${user.id})}">My Applications</a>
+
+                    <form th:action="@{/user/role/{user_id}(user_id=${user.id})}" method="post" th:object="${user}"
+                          name="farmerRoleForm">
+                        <input type="hidden" name="roleId" th:value="1" />
+                        <button sec:authorize="hasRole('ROLE_ADMIN')" type="submit" class="btn btn-success" onclick="alert('Farmer Role is assigned to the user')" style="width: 272px; height: 40px; background-color: rgba(7,40,255,0.75); color: black;">Farmer Role</button>
+                    </form>
+
+                    <form th:action="@{/user/role/{user_id}(user_id=${user.id})}" method="post" th:object="${user}"
+                          name="inspectorRoleForm">
+                        <input type="hidden" name="roleId" th:value="2" />
+                        <button sec:authorize="hasRole('ROLE_ADMIN')" type="submit" class="btn btn-success" onclick="alert('Inspector Role is assigned to the user')" style="width: 272px; height: 40px; background-color: #8707ff; color: black;">Inspector Role</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(users)}">
+        No Users found!
+    </div>
+    <a href="/user/new" class="btn btn-primary" role="button">Create new User</a>
+    <script type="text/javascript">
+        $("[name='deleteUser']").click(function () {
+            var urlCall = "/user/";
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                url: urlCall + $(this).attr('id'),
+                type: 'DELETE',
+                headers: {
+                    [csrfHeader]: csrfToken
+                },
+                success: function (result) {
+                    console.log(result);
+                    $(location).attr("href", value="/user");
+                },
+                error: function (result) {
+                    console.log(result);
+                },
+            });
+        });
+    </script>
+</users>
