@@ -2,11 +2,14 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useRemoteData } from '@/composables/useRemoteData.js';
-const backendVar = import.meta.env.VITE_BACKEND; 
+const backendEnvVar = import.meta.env.VITE_BACKEND; 
 
 const userId = useRoute().params.id;
 const router = useRouter(); // Access the router instance
-const urlRef = ref(backendVar`/api/user/${userId}`);
+const urlRef = computed(() => {
+  return backendEnvVar + '/api/user/' + `${userId}`;
+});
+//const urlRef = ref(backendVar`/api/user/${userId}`);
 const authRef = ref(true);
 const methodRef = ref("DELETE");
 

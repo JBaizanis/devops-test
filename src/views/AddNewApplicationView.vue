@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRemoteData } from "@/composables/useRemoteData.js";
 import { useRouter } from 'vue-router';
 import { useApplicationStore } from '@/stores/application.js';
-const backendVar = import.meta.env.VITE_BACKEND; 
+const backendEnvVar = import.meta.env.VITE_BACKEND; 
 
 const router = useRouter(); // Access the router instance
 
@@ -17,7 +17,10 @@ const formDataRef = ref({
   "latitude": ""
 });
 const { userData } = useApplicationStore();
-const urlRef = ref(backendVar+`/api/application/new/${userData.id}`);
+const urlRef = computed(() => {
+  return backendEnvVar + '/api/application/new/' + `${userData.id}`;
+});
+//const urlRef = ref(backendVar+`/api/application/new/${userData.id}`);
 const authRef = ref(true);
 const methodRef = ref("POST");
 

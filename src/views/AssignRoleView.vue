@@ -2,12 +2,15 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRemoteData } from '@/composables/useRemoteData.js';
-const backendVar = import.meta.env.VITE_BACKEND; 
+const backendEnvVar = import.meta.env.VITE_BACKEND; 
 
 const route = useRoute();
 const userId = ref(route.params.id);
 const roleId = ref(route.params.roleId);
-const urlRef = ref(backendVar+`/api/user/role/${userId.value}/${roleId.value}`);
+const urlRef = computed(() => {
+  return backendEnvVar +'/api/user/role/' + `${userId.value}/` + `${roleId.value}`;
+});
+//const urlRef = ref(backendVar+`/api/user/role/${userId.value}/${roleId.value}`);
 const authRef = ref(true);
 const methodRef = ref("POST");
 
