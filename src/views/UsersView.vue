@@ -3,10 +3,10 @@ import { ref, onMounted } from 'vue';
 import { useRemoteData } from '@/composables/useRemoteData.js';
 const backendEnvVar = import.meta.env.VITE_BACKEND; 
 
-const urlRef = computed(() => {
-  return backendEnvVar +'/api/user';
-});
-//const urlRef = ref(backendVar+'/api/user');
+// const urlRef = computed(() => {
+//   return backendEnvVar +'/api/user';
+// });
+const urlRef = ref(backendVar+'/api/user');
 const authRef = ref(true);
 const { data, performRequest } = useRemoteData(urlRef, authRef);
 
