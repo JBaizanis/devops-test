@@ -18,7 +18,7 @@ const formDataRef = ref({
 // const urlRef = computed(() => {
 //   return backendEnvVar +'/api/user/new';
 // });
-const urlRef = ref(backendVar+"/api/user/new");
+const urlRef = ref(backendVar+'/api/user/new');
 const authRef = ref(true);
 const methodRef = ref("POST");
 
