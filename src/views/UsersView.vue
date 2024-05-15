@@ -6,7 +6,7 @@ const backendEnvVar = import.meta.env.VITE_BACKEND;
 // const urlRef = computed(() => {
 //   return backendEnvVar +'/api/user';
 // });
-const urlRef = ref('http:localhost:8080/api/user');
+const urlRef = ref('http:40.89.179.118:8080/api/user');
 const authRef = ref(true);
 const { data, performRequest } = useRemoteData(urlRef, authRef);
 
