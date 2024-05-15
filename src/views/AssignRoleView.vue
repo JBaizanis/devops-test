@@ -7,10 +7,10 @@ const backendEnvVar = import.meta.env.VITE_BACKEND;
 const route = useRoute();
 const userId = ref(route.params.id);
 const roleId = ref(route.params.roleId);
-const urlRef = computed(() => {
-  return backendEnvVar +'/api/user/role/' + `${userId.value}/` + `${roleId.value}`;
-});
-//const urlRef = ref(backendVar+`/api/user/role/${userId.value}/${roleId.value}`);
+// const urlRef = computed(() => {
+//   return backendEnvVar +'/api/user/role/' + `${userId.value}/` + `${roleId.value}`;
+// });
+const urlRef = ref(backendEnvVar+`/api/user/role/${userId.value}/${roleId.value}`);
 const authRef = ref(true);
 const methodRef = ref("POST");
 

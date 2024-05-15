@@ -6,10 +6,10 @@ const backendEnvVar = import.meta.env.VITE_BACKEND;
 
 const { userData } = useApplicationStore();
 // const route = useRoute();
-const urlRef = computed(() => {
-  return backendEnvVar +'/api/application/user/' + `${userData.id}`;
-});
-//const urlRef = ref(backendVar+`/api/application/user/${userData.id}`);
+// const urlRef = computed(() => {
+//   return backendEnvVar +'/api/application/user/' + `${userData.id}`;
+// });
+const urlRef = ref(backendEnvVar+`/api/application/user/${userData.id}`);
 const authRef = ref(true);
 const { data, performRequest } = useRemoteData(urlRef, authRef);
 

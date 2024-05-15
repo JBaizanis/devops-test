@@ -17,10 +17,10 @@ const formDataRef = ref({
   "latitude": ""
 });
 const { userData } = useApplicationStore();
-const urlRef = computed(() => {
-  return backendEnvVar + '/api/application/new/' + `${userData.id}`;
-});
-//const urlRef = ref(backendVar+`/api/application/new/${userData.id}`);
+// const urlRef = computed(() => {
+//   return backendEnvVar + '/api/application/new/' + `${userData.id}`;
+// });
+const urlRef = ref(backendEnvVar+`/api/application/new/${userData.id}`);
 const authRef = ref(true);
 const methodRef = ref("POST");
 

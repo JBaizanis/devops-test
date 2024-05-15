@@ -15,10 +15,10 @@ const initialPhone = useRoute().params.phone;
 const initialEmail = useRoute().params.email;
 const initialAddress = useRoute().params.address;
 const router = useRouter(); // Access the router instance
-const urlRef = computed(() => {
-  return backendEnvVar +'/api/user/' + `${userId}`;
-});
-//const urlRef = ref(backendVar+`/api/user/${userId}`);
+// const urlRef = computed(() => {
+//   return backendEnvVar +'/api/user/' + `${userId}`;
+// });
+const urlRef = ref(backendEnvVar+`/api/user/${userId}`);
 const authRef = ref(true);
 const methodRef = ref("PUT");
 

@@ -6,10 +6,10 @@ const backendEnvVar = import.meta.env.VITE_BACKEND;
 
 const applicationId = useRoute().params.id;
 const router = useRouter(); // Access the router instance
-const urlRef = computed(() => {
-  return backendEnvVar +'/api/application/' + `${applicationId}`;
-});
-//const urlRef = ref(backendVar+`/api/application/${applicationId}`);
+// const urlRef = computed(() => {
+//   return backendEnvVar +'/api/application/' + `${applicationId}`;
+// });
+const urlRef = ref(backendEnvVar+`/api/application/${applicationId}`);
 const authRef = ref(true);
 const methodRef = ref("DELETE");
 
