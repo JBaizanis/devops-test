@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/application")
-@CrossOrigin(origins = "http://51.120.247.169:8080")
+@CrossOrigin(origins = "http://51.120.247.169")
 public class ApplicationRestController {
 
 
