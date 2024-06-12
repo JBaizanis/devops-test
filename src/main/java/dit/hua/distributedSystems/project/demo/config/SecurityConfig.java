@@ -76,6 +76,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         final CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of("http://51.120.247.169"));
+        corsConfiguration.setAllowedOrigins(List.of("http://4.211.248.159:9000"));
+        //corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
         // corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
