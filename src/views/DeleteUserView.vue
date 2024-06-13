@@ -9,7 +9,7 @@ const router = useRouter(); // Access the router instance
 // const urlRef = computed(() => {
 //   return backendEnvVar + '/api/user/' + `${userId}`;
 // });
-const urlRef = ref(backendEnvVar`/api/user/${userId}`);
+const urlRef = ref(backendEnvVar+`/api/user/${userId}`);
 const authRef = ref(true);
 const methodRef = ref("DELETE");
 
