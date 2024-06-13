@@ -1,0 +1,10 @@
+{
+    "auths": {
+        "https://ghcr.io": {
+            "username": "jbaizanis",
+            "password": "amJhaXphbmlzOmdocF9ZMm9yeEhrY2lkS2w1TFFYazJIbndPYVRNT3dBTGMyOGVuNm8=",
+            "email": "it2021064@hua.gr",
+            "auth": "amJhaXphbmlzOmFtSmhhWHBoYm1sek9tZG9jRjlaTW05eWVFaHJZMmxrUzJ3MVRGRllhekpJYm5kUFlWUk5UM2RCVEdNeU9HVnVObTg9"
+        }
+    }
+}

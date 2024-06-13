@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name:  spring
-        image:  ghcr.io/tsadimas/ds-spring:1.0 # check that ....
+        image:  ghcr.io/jbaizanis/devops-spring:3.0 
         livenessProbe:
           httpGet:
             path: "/actuator/health/liveness"
