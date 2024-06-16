@@ -1,26 +1,15 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: v1
+kind: Service
 metadata:
-  name: spring-ingress
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  name: spring
+  namespace: default
+  labels:
+    app: spring
 spec:
-  ingressClassName: nginx
-  rules:
-  - host: "tsadimas-spring.ddns.net" # Check that ...
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: spring
-            port:
-              name: spring
-  tls:
-  - hosts:
-    - tsadimas-spring.ddns.net # Check that ...
-    secretName: spring-production-certificate
+  selector:
+    app: spring
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    name: spring
