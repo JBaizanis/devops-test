@@ -1,4 +1,7 @@
 <script setup>
+/* Το component συνδέεται με το κατάλληλο endpoint και επικοινωνεί με το backend για να κάνει authenticate τα credentials του χρήστη.
+   Σε περίπτωση που τα credentials είναι έγκυρα (ταιριάζουν με αυτά στην Βάση Δεδομένων), ο χρήστης συνδέεται επιτυχώς.
+   Σε περίπτωση που τα credentials δεν είναι έγκυρα, ο χρήστης δεν συνδέεται και εμφανίζεται αντίστοιχο μήνυμα (Authentication failed!). */
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useApplicationStore } from '@/stores/application.js';
@@ -56,6 +59,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <!--Δημιουργία πεδίων και κουμπιού για την εισαγωγή των στοιχείων του χρήστη.-->
   <div class="bg-body-tertiary">
     <div class="container">
       <div class="row py-4 px-3">

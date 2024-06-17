@@ -1,4 +1,5 @@
 <script setup>
+// Το component με το κλικ του κουμπιού αναλαμβάνει να αποσυνδέσει τον τρέχον χρήστη και να τον επιστρέψει στην οθόνη της σύνδεσης (Login).
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useApplicationStore } from '@/stores/application.js';
@@ -17,6 +18,7 @@ const onFormSubmit = () => {
 </script>
 
 <template>
+  <!--Δημιουργία ενός κουμπιού για την αποσύνδεση του χρήστη-->
   <div class="bg-body-tertiary">
     <div class="container">
       <div class="row py-4 px-3">

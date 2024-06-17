@@ -1,11 +1,9 @@
 <script setup>
+// Το component εμφανίζει το σύνολο όλων των applications, αφότου επικοινωνήσει με το backend.
 import { ref, onMounted } from 'vue';
 import { useRemoteData } from '@/composables/useRemoteData.js';
 const backendEnvVar = import.meta.env.VITE_BACKEND; 
 
-// const urlRef = computed(() => {
-//   return backendEnvVar + '/api/application';
-// });
 const urlRef = ref(backendEnvVar+'/api/application');
 const authRef = ref(true);
 const { data, performRequest } = useRemoteData(urlRef, authRef);
@@ -16,6 +14,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <!--Δημιουργία ενός table που εμφανίζει τα στοιχεία όλων των applications
+      και προσφέρει επιλογές για την λήψη απόφασης ("MakeDecision" view) και για τον καθορισμό αποζημίωσης ("DetermineCompensation" view).
+      Σε περίπτωση που δεν υπάρχουν application προς έλεγχο, εμφανίζεται ενημερωτικό μήνυμα.-->
     <div class="bg-body-tertiary">
         <div class="container">
             <div class="row py-4 px-3">

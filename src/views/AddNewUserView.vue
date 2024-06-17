@@ -1,4 +1,7 @@
 <script setup>
+/* Το component συνδέεται με το κατάλληλο endpoint στο backend για να προσθέσει ένα νέο χρήστη.
+   Σε περίπτωση επιτυχίας, εμφανίζει σχετικό μήνυμα και προσθέτει το νέο χρήστη,
+   ενώ σε περίπτωση αποτυχίας απλώς εμφανίζει σχετικό μήνυμα. */
 import { ref } from "vue";
 import { useRouter } from 'vue-router';
 import { useRemoteData } from "@/composables/useRemoteData.js";
@@ -15,9 +18,7 @@ const formDataRef = ref({
   "email": "",
   "address": ""
 });
-// const urlRef = computed(() => {
-//   return backendEnvVar +'/api/user/new';
-// });
+
 const urlRef = ref(backendEnvVar+'/api/user/new');
 const authRef = ref(true);
 const methodRef = ref("POST");
@@ -38,6 +39,8 @@ const onSubmit = async () => {
 </script>
 
 <template>
+  <!--Δημιουργία μιας φόρμας στην οποία ο admin δίνει ως input τα στοιχεία του καινούριου χρήστη.
+    Επιπλέον, δημιουργία ενός κουμπιού για το confirmation της πρόσθεσης του νέου χρήστη.-->
   <div>
     <h2>Add New User</h2>
     <form @submit.prevent="onSubmit">

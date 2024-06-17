@@ -1,4 +1,6 @@
 <script setup>
+/* Το component συνδέεται με το κατάλληλο endpoint στο backend για να προσπελάσει τον ρόλο του εκάστοτε χρήστη και να του δώσει
+   τον ρόλο ο οποίος επιλέχθηκε από το "users" view. */
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRemoteData } from '@/composables/useRemoteData.js';
@@ -7,9 +9,7 @@ const backendEnvVar = import.meta.env.VITE_BACKEND;
 const route = useRoute();
 const userId = ref(route.params.id);
 const roleId = ref(route.params.roleId);
-// const urlRef = computed(() => {
-//   return backendEnvVar +'/api/user/role/' + `${userId.value}/` + `${roleId.value}`;
-// });
+
 const urlRef = ref(backendEnvVar+`/api/user/role/${userId.value}/${roleId.value}`);
 const authRef = ref(true);
 const methodRef = ref("POST");
@@ -24,6 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!--Δημιουργία ενός alert επιτυχίας για την αλλαγή του ρόλου του χρήστη και ενός κουμπιού για επιστροφή στο "users" view.-->
   <div>
     <div class="alert alert-success" role="alert">
       <h4 class="alert-heading">Success!</h4>

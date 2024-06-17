@@ -1,4 +1,6 @@
 <script setup>
+/* Το component συνδέεται με το κατάλληλο endpoint στο backend για να προσπελάσει τα στοιχεία του εκάστοτε χρήστη και να πραγματοποιήσει
+   συγκρίσεις με τα στοιχεία που εισάχθηκαν, ούτως ώστε είτε να τα ενημερώσει, είτε να εμφανίσει μήνυμα σφάλματος ενημέρωσης. */
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useRemoteData } from '@/composables/useRemoteData.js';
@@ -15,9 +17,7 @@ const initialPhone = useRoute().params.phone;
 const initialEmail = useRoute().params.email;
 const initialAddress = useRoute().params.address;
 const router = useRouter(); // Access the router instance
-// const urlRef = computed(() => {
-//   return backendEnvVar +'/api/user/' + `${userId}`;
-// });
+
 const urlRef = ref(backendEnvVar+`/api/user/${userId}`);
 const authRef = ref(true);
 const methodRef = ref("PUT");
@@ -49,6 +49,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
+  <!--Δημιουργία ενός table με τα κατάλληλα πεδία εισαγωγής για την ενημέρωση στοιχείων του επιλεγμένου χρήστη.-->
   <div>
     <h2>Edit User</h2>
     <form @submit.prevent="onSubmit">

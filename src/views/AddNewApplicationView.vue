@@ -1,4 +1,7 @@
 <script setup>
+/* Το component συνδέεται με το κατάλληλο endpoint στο backend για να προσθέσει ένα νέο application για τον farmer.
+   Σε περίπτωση επιτυχίας, εμφανίζει σχετικό μήνυμα και προσθέτει το νέο application στα applications του,
+   ενώ σε περίπτωση αποτυχίας απλώς εμφανίζει σχετικό μήνυμα. */
 import { ref } from "vue";
 import { useRemoteData } from "@/composables/useRemoteData.js";
 import { useRouter } from 'vue-router';
@@ -17,9 +20,7 @@ const formDataRef = ref({
   "latitude": ""
 });
 const { userData } = useApplicationStore();
-// const urlRef = computed(() => {
-//   return backendEnvVar + '/api/application/new/' + `${userData.id}`;
-// });
+
 const urlRef = ref(backendEnvVar+`/api/application/new/${userData.id}`);
 const authRef = ref(true);
 const methodRef = ref("POST");
@@ -44,6 +45,8 @@ const onSubmit = async () => {
 
 
 <template>
+    <!--Δημιουργία μιας φόρμας στην οποία ο farmer δίνει ως input τα στοιχεία του καινούριου application του.
+      Επιπλέον, δημιουργία ενός κουμπιού για το confirmation της πρόσθεσης του νέου application στο σύνολο των applications του.-->
     <div>
         <h2>Add New Application</h2>
         <form @submit.prevent="onSubmit">
