@@ -24,30 +24,39 @@ pipeline {
                 sh 'chmod +x ./mvnw && mvn package -Dmaven.test.skip'
             }
         }
-        stage('Docker build and push') {
+        // stage('Docker build and push') {
+        //     steps {
+        //         sh '''
+        //             HEAD_COMMIT=$(git rev-parse --short HEAD)
+        //             TAG=$HEAD_COMMIT-$BUILD_ID
+        //             docker build --rm -t $DOCKER_PREFIX:$TAG -t $DOCKER_PREFIX:latest  -f nonroot.Dockerfile .
+        //             echo $DOCKER_TOKEN | docker login $DOCKER_SERVER -u $DOCKER_USER --password-stdin
+        //             docker push $DOCKER_PREFIX --all-tags
+        //         '''
+        //     }
+        // }
+        // stage('deploy to k8s') {
+        //     steps {
+        //         sh '''
+        //             HEAD_COMMIT=$(git rev-parse --short HEAD)
+        //             TAG=$HEAD_COMMIT-$BUILD_ID
+        //             kubectl set image deployment/spring-deployment spring=$DOCKER_PREFIX:$TAG
+        //             kubectl rollout status deployment spring-deployment --watch --timeout=2m
+        //         '''
+        //     }
+        // }
+        stage('Deploy to Kubernetes') {
             steps {
                 sh '''
-                    HEAD_COMMIT=$(git rev-parse --short HEAD)
-                    TAG=$HEAD_COMMIT-$BUILD_ID
-                    docker build --rm -t $DOCKER_PREFIX:$TAG -t $DOCKER_PREFIX:latest  -f nonroot.Dockerfile .
-                    echo $DOCKER_TOKEN | docker login $DOCKER_SERVER -u $DOCKER_USER --password-stdin
-                    docker push $DOCKER_PREFIX --all-tags
+                    kubectl apply -f k8s/postgres/ 
+                    kubectl apply -f k8s/spring/spring-svc.yaml
+                    kubectl apply -f k8s/spring/spring-deployment.yaml
+                    kubectl apply -f k8s/vue/deployment.yaml
+                    kubectl apply -f k8s/vue/vue-svc.yaml
+                    kubectl apply -f k8s/vue/vue-ingress.yaml
                 '''
             }
         }
-        stage('deploy to k8s') {
-            steps {
-                sh '''
-                    HEAD_COMMIT=$(git rev-parse --short HEAD)
-                    TAG=$HEAD_COMMIT-$BUILD_ID
-                    kubectl config use-context devops
-                    kubectl set image deployment/spring-deployment spring=$DOCKER_PREFIX:$TAG
-                    kubectl rollout status deployment spring-deployment --watch --timeout=2m
-                '''
-            }
-        }
-
-
 
     }
 
