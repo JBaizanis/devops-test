@@ -35,20 +35,14 @@ pipeline {
         //         '''
         //     }
         // }
-        // stage('deploy to k8s') {
-        //     steps {
-        //         sh '''
-        //             HEAD_COMMIT=$(git rev-parse --short HEAD)
-        //             TAG=$HEAD_COMMIT-$BUILD_ID
-        //             kubectl set image deployment/spring-deployment spring=$DOCKER_PREFIX:$TAG
-        //             kubectl rollout status deployment spring-deployment --watch --timeout=2m
-        //         '''
-        //     }
-        // }
-        stage('Deploy to Kubernetes') {
+        stage('deploy to k8s') {
             steps {
                 sh '''
-                    kubectl create secret docker-registry registry-credentials --from-file=.dockerconfigjson=.dockerconfig.json
+                    #HEAD_COMMIT=$(git rev-parse --short HEAD)
+                    #TAG=$HEAD_COMMIT-$BUILD_ID
+                    #kubectl set image deployment/spring-deployment spring=$DOCKER_PREFIX:$TAG
+                    #kubectl rollout status deployment spring-deployment --watch --timeout=2m
+                    #kubectl create secret docker-registry registry-credentials --from-file=.dockerconfigjson=.dockerconfig.json
                     kubectl apply -f k8s/postgres/ 
                     kubectl apply -f k8s/spring/spring-svc.yaml
                     kubectl apply -f k8s/spring/spring-deployment.yaml
