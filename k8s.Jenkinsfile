@@ -48,6 +48,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
+                    kubectl create secret docker-registry registry-credentials --from-file=.dockerconfigjson=.dockerconfig.json
                     kubectl apply -f k8s/postgres/ 
                     kubectl apply -f k8s/spring/spring-svc.yaml
                     kubectl apply -f k8s/spring/spring-deployment.yaml
